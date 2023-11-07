@@ -26,5 +26,11 @@ bv_selection <- intersect(bv_avec_troncons,
                           bv_avec_plandos)
 
 test2 <- identifier_troncons_les_plus_proches (sf_plandos = pe,
-                                               sf_bv = bv%>% filter(cdoh_bv %in% bv_selection),
+                                               sf_bv = bv %>% filter(cdoh_bv %in% bv_selection),
                                                sf_troncons = qa)
+
+test3 <- test2 %>% 
+  left_join(y = qa %>% mutate(ID_BDCARTH = as.character(ID_BDCARTH))) %>% 
+  group_by(cdoh_plando) %>% 
+  filter(QAMOY_MN == max(QAMOY_MN)) %>% # éventuellement choisir un autre débit
+  ungroup()
