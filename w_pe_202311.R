@@ -66,6 +66,9 @@ troncons_plus_proches <- troncons_plus_proches %>%
   ungroup() %>%
   unique()
 
+pe_cd_carthage <- pe %>%
+  left_join(y = troncons_plus_proches, join_by(cdoh_plando == cdoh_plando), relationship = 'many-to-many')
+
 # Jointure des CD topage et attributs aux plans d'eau ----
 
 ## sous-jeu de données sur les BV qui intersectent des troncons et des plandos ----
@@ -92,10 +95,12 @@ troncons_topage_plus_proches <- troncons_topage_plus_proches %>%
 
 pe_cd_topage <- pe %>%
   left_join(y = troncons_topage_plus_proches, join_by(cdoh_plando == cdoh_plando), relationship = 'many-to-many')
-  
+
+# Jointure de la géologie
+
   
 ## export des résultats ----
 
-sf::write_sf(obj = troncons_plus_proches, dsn = "data/outputs/pe_id_carthage.gpkg")
-sf::write_sf(obj = pe_cd_topage, dsn = "data/outputs/pe_id_topage.gpkg")
+sf::write_sf(obj = pe_cd_carthage, dsn = "data/outputs/pe_cd_carthage.gpkg")
+sf::write_sf(obj = pe_cd_topage, dsn = "data/outputs/pe_cd_topage.gpkg")
 

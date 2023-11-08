@@ -51,7 +51,9 @@ identifier_troncons_les_plus_proches_pour_un_bv <- function(id_bv,
       values_to = "distance"
     ) %>%
     group_by(cdoh_plando) %>%
-    filter(distance == min(distance))
+    filter(distance == min(distance))  %>%
+    mutate(distance_carthage=distance) %>%
+    select(-distance)
   
   dist_df
   
@@ -87,7 +89,9 @@ identifier_troncons_topage_les_plus_proches_pour_un_bv <- function(id_bv,
       values_to = "distance"
     ) %>%
     group_by(cdoh_plando) %>%
-    filter(distance == min(distance))
+    filter(distance == min(distance)) %>%
+    mutate(distance_topage=distance) %>%
+    select(-distance)
   
   dist_df
   
@@ -162,3 +166,4 @@ identifier_troncons_topage_les_plus_proches <- function(sf_plandos,
   )
   
 }
+
